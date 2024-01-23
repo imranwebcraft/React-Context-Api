@@ -1,7 +1,12 @@
 import { useState } from "react";
+import { useTask, useTaskDispatch } from "../context/TaskContext";
+import getNextId from "../utils/getNextId";
 
-export default function AddTask({ onAdd }) {
+export default function AddTask() {
 	const [text, setText] = useState("");
+	const dispatch = useTaskDispatch();
+	const tasks = useTask();
+
 	const handleChangeText = (e) => {
 		setText(e.target.value);
 	};
@@ -9,7 +14,11 @@ export default function AddTask({ onAdd }) {
 	const handleAddTask = () => {
 		if (text.length > 0) {
 			setText("");
-			onAdd(text);
+			dispatch({
+				type: "added",
+				text: text,
+				id: getNextId(tasks),
+			});
 		} else {
 			alert("Please add something first");
 		}

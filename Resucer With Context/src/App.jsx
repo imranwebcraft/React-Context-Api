@@ -1,53 +1,41 @@
-import { useImmerReducer } from "use-immer";
 import AddTask from "./components/AddTask";
 import TaskList from "./components/TaskList";
-import { initialTasks } from "./data/tasks";
-import taskReducer from "./reducers/taskReducer";
-import getNextId from "./utils/getNextId";
+import TaskContextProvider from "./context/TaskContext";
 
 export default function App() {
-	const [tasks, dispatch] = useImmerReducer(taskReducer, initialTasks);
+	// :: You move all the things to the Context file.
 
-	// Handlers
-	const handleAddTask = (text) => {
-		dispatch({
-			type: "added",
-			text: text,
-			id: getNextId(tasks),
-		});
-	};
+	// const [tasks, dispatch] = useImmerReducer(taskReducer, initialTasks);
 
-	const handleChangeTask = (task) => {
-		dispatch({
-			type: "changed",
-			task: task,
-		});
-	};
+	// We manage the dispatch using context
 
-	const handleDeleteTask = (taskId) => {
-		dispatch({
-			type: "deleted",
-			id: taskId,
-		});
-	};
+	// const handleChangeTask = (task) => {
+	// 	dispatch({
+	// 		type: "changed",
+	// 		task: task,
+	// 	});
+	// };
+
+	// const handleDeleteTask = (taskId) => {
+	// 	dispatch({
+	// 		type: "deleted",
+	// 		id: taskId,
+	// 	});
+	// };
 
 	return (
-		<>
+		<TaskContextProvider>
 			<h1>Prague itinerary</h1>
-			<AddTask onAdd={handleAddTask} />
-			<TaskList
-				tasks={tasks}
-				onChangeTask={handleChangeTask}
-				onDeleteTask={handleDeleteTask}
-			/>
-		</>
+			<AddTask />
+			<TaskList />
+		</TaskContextProvider>
 	);
 }
 
 /*
 export const initialTasks = [
 	{ id: 0, text: "Visit Kafka Museum", done: true },
-	{ id: 1, text: "Watch a puppet show", done: false }, // Murgi
+	{ id: 1, text: "Watch a puppet show", done: false },
 	{ id: 2, text: "Lennon Wall pic", done: false },
 ];
 */
