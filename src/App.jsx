@@ -5,8 +5,8 @@ export default function Page() {
 	return (
 		<Section level={1}>
 			<Heading>Title</Heading>
-			<Section>
-				<Heading level={2}>Heading</Heading>
+			<Section level={2}>
+				<Heading>Heading</Heading>
 				<Heading>Heading</Heading>
 				<Heading>Heading</Heading>
 				<Section level={3}>
